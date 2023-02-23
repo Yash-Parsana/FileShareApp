@@ -15,7 +15,7 @@ const emailForm = document.querySelector("#emailForm");
 
 const toast = document.querySelector(".toast");
 
-const baseURL = "http://localhost:3000";
+const baseURL = "https://filesharingapp-na3a.onrender.com/";
 const uploadURL = `${baseURL}/api/files/upload`;
 const emailURL = `${baseURL}/api/files/send`;
 
