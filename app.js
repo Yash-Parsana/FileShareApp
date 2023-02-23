@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 dotenv.config({
-    path:'./config/.env'
+    path:'.env'
 })
 db()
 
