@@ -20,10 +20,13 @@ let upload = multer({
 const handleUpload = (req,res) => {
 
     //store File
+    console.log("Inside handleUpload fun");
     upload(req, res, async (err) => {
         //validate
+        log("uploading...")
         if (!req.file)
         {
+            console.log("file not found...");
             res.json({
                 success: false,
                 message:"File is not provided"
@@ -31,6 +34,7 @@ const handleUpload = (req,res) => {
         }
         else if (err)
         {
+            log("Error in file upload... ",err)
             res.status(500).send({error:err.message})
         }
         else {
@@ -41,6 +45,7 @@ const handleUpload = (req,res) => {
                 path: req.file.path,
                 size:req.file.size
             })
+            console.log("saving in database...");
             const response = await file.save()
             console.log("url : ",`${process.env.APP_BASE_URL}/api/files/show/${response.uuid}`);
             res.json({
