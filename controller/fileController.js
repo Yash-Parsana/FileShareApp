@@ -33,7 +33,7 @@ const handleUpload = (req,res) => {
         }
         if (err)
         {
-            return req.status(500).send({error:err.message})
+            return res.status(500).send({error:err.message})
         }
         //store in database
         const file = new File({
