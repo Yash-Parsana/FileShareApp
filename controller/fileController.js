@@ -18,9 +18,7 @@ let upload = multer({
 }).single('myfile')
 
 const handleUpload = (req,res) => {
-    
-    
-    
+
     //store File
     upload(req, res, async (err) => {
         //validate
@@ -31,21 +29,23 @@ const handleUpload = (req,res) => {
                 message:"File is not provided"
             })
         }
-        if (err)
+        else if (err)
         {
-            return res.status(500).send({error:err.message})
+            res.status(500).send({error:err.message})
         }
-        //store in database
-        const file = new File({
-            filename: req.file.filename,
-            uuid: uuid4(),
-            path: req.file.path,
-            size:req.file.size
-        })
-        const response = await file.save()
-        return res.json({
-            file:`${process.env.APP_BASE_URL}/api/files/show/${response.uuid}`
-        })
+        else {
+            //store in database
+            const file = new File({
+                filename: req.file.filename,
+                uuid: uuid4(),
+                path: req.file.path,
+                size:req.file.size
+            })
+            const response = await file.save()
+            res.json({
+                file:`${process.env.APP_BASE_URL}/api/files/show/${response.uuid}`
+            })
+        }
     })
 }
 
