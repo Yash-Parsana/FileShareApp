@@ -42,6 +42,7 @@ const handleUpload = (req,res) => {
                 size:req.file.size
             })
             const response = await file.save()
+            console.log("url : ",`${process.env.APP_BASE_URL}/api/files/show/${response.uuid}`);
             res.json({
                 file:`${process.env.APP_BASE_URL}/api/files/show/${response.uuid}`
             })
