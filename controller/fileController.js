@@ -91,7 +91,7 @@ const downloadFile = async (req, res) => {
                 message:"File not Found..."
             })
         }
-        console.log(file);
+        // console.log(file);
         const filepath = `${__dirname}/../${file.path}`;
         console.log("File path : ",filepath);
         res.download(filepath)
