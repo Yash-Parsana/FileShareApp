@@ -15,7 +15,7 @@ const emailForm = document.querySelector("#emailForm");
 
 const toast = document.querySelector(".toast");
 
-const baseURL = "https://filesharingapp-5kmg.onrender.com";
+const baseURL = "http://localhost:3000";
 const uploadURL = `${baseURL}/api/files/upload`;
 const emailURL = `${baseURL}/api/files/sendmail`;
 
@@ -85,7 +85,7 @@ const uploadFile = () => {
 
   files = fileInput.files;
   const formData = new FormData();
-  console.log(`file ${files[0]} add as myfile`);
+  console.log(`file ${JSON.stringify(files[0])} added as myfile`);
   formData.append("myfile", files[0]);
 
   //show the uploader
