@@ -23,7 +23,7 @@ const handleUpload = (req,res) => {
     console.log("Inside handleUpload fun");
     upload(req, res, async (err) => {
         //validate
-        console.log("uploading...")
+        console.log("uploading... ",req.file)
         if (!req.file)
         {
             console.log("file not found...");
