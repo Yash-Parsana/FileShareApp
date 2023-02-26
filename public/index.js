@@ -23,6 +23,7 @@ const maxAllowedSize = 100 * 1024 * 1024; //100mb
 
 
 browseBtn.addEventListener("click", () => {
+  console.log("clicked on browse...");
   fileInput.click();
 });
 
@@ -30,9 +31,11 @@ dropZone.addEventListener("drop", (e) => {
   e.preventDefault();
   //   console.log("dropped", e.dataTransfer.files[0].name);
   const files = e.dataTransfer.files;
+  console.log("Selected file is : ",files);
   if (files.length === 1) {
     if (files[0].size < maxAllowedSize) {
       fileInput.files = files;
+      console.log("setting in fileInput Object");
       uploadFile();
     } else {
       showToast("Max file size is 100MB");
@@ -82,6 +85,7 @@ const uploadFile = () => {
 
   files = fileInput.files;
   const formData = new FormData();
+  console.log(`file ${files[0]} add as myfile`);
   formData.append("myfile", files[0]);
 
   //show the uploader
@@ -94,6 +98,7 @@ const uploadFile = () => {
   xhr.upload.onprogress = function (event) {
     // find the percentage of uploaded
     let percent = Math.round((100 * event.loaded) / event.total);
+    console.log("Uploading compeleted... ",percent);
     progressPercent.innerText = percent;
     const scaleX = `scaleX(${percent / 100})`;
     bgProgress.style.transform = scaleX;
@@ -102,6 +107,7 @@ const uploadFile = () => {
 
   // handle error
   xhr.upload.onerror = function () {
+    console.log("Error occured in upload.onerror ",xhr.error);
     showToast(`Error in upload: ${xhr.error}.`);
     fileInput.value = ""; // reset the input
   };
@@ -109,7 +115,11 @@ const uploadFile = () => {
   // listen for response which will give the link
   xhr.onreadystatechange = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
+      console.log("File uploaded succefully...",xhr.responseText);
       onFileUploadSuccess(xhr.responseText);
+    }
+    else {
+      console.log("xhr ready state : ",xhr.readyState);
     }
   };
 
@@ -125,8 +135,10 @@ const onFileUploadSuccess = (res) => {
   emailForm[2].removeAttribute("disabled");
   emailForm[2].innerText = "Send";
   progressContainer.style.display = "none"; // hide the box
-
+  
+  console.log("Got response...",res);
   const { file: url } = JSON.parse(res);
+  console.log("fetching url from respose...",url);
   console.log(url);
   sharingContainer.style.display = "block";
   fileURL.value = url;
